@@ -1,73 +1,37 @@
-# Simple CRM - Design Document
+# Simple CRM Application Design
 
-## 1. Entitas & Relasi
+## 1. Overview
+This document describes the design and architecture of the Simple CRM application.
 
-### Customer
-- **id**: Long (Primary Key)
-- **nama**: String
-- **tipe**: Enum (PERORANGAN, PERUSAHAAN)
-- **status**: Enum (SEED, NURTURE, LEAD, ACTIVE, LOYAL)
-- **alamat**: Address (One-to-One)
-- **contactPersons**: List<ContactPerson> (One-to-Many)
+## 2. Main Features
+- Manage customer prospect data. Customers can be individuals or companies.
+- Customer data includes: name, address (street, city/regency, province, country), contact person(s), status (Seed, Nurture, Lead, Active, Loyal).
+- Browse customer data with search by name, city, province, or country. Customer list is displayed in a table. Clicking a column header sorts by that column. Maximum 50 rows per page; user must click next page for more.
 
-### Address
-- **id**: Long (Primary Key)
-- **jalan**: String
-- **kota**: String
-- **propinsi**: String
-- **negara**: String
-
-### ContactPerson
-- **id**: Long (Primary Key)
-- **customerId**: Long (Foreign Key ke Customer)
-- **nama**: String
-- **nomorTelepon**: String
-- **email**: String
-
-## 2. Relasi Antar Entitas
-- Satu Customer memiliki satu Address.
-- Satu Customer dapat memiliki banyak ContactPerson.
-
-## 3. Fitur Utama
-- CRUD data customer.
-- CRUD data contact person (per customer, bisa lebih dari satu).
-- Pencarian customer (by name, kota, propinsi, negara).
-- Tabel data customer dengan sorting per kolom.
-- Pagination (maksimal 50 baris per halaman).
+## 3. Technology Stack
+- Programming Language: Java 21
+- Frontend: Java Swing
+- Database: H2 in-memory database
 
 ## 4. Layered Architecture
-
-### 4.1. Presentation Layer (UI)
-- Java Swing
-- Komponen: Main window, form input customer, tabel data, panel pencarian, dsb.
-- Hanya berinteraksi dengan Service Layer.
-
-### 4.2. Service Layer (Business Logic)
-- Kelas: CustomerService, ContactPersonService, dsb.
-- Validasi data, pagination, sorting, dsb.
-- Berinteraksi dengan DAO Layer.
-
-### 4.3. Data Access Layer (DAO/Repository)
-- Kelas: CustomerDAO, AddressDAO, ContactPersonDAO, dsb.
-- CRUD dan query ke database H2 (JDBC).
-
-### 4.4. Model/Entity Layer
-- Kelas: Customer, Address, ContactPerson, dsb.
-- Berisi field dan getter/setter.
+- **Presentation Layer**: Java Swing UI for user interaction.
+- **Service Layer**: Business logic, validation, and coordination between layers.
+- **Repository/DAO Layer**: Data access logic (CRUD, search, pagination, sorting).
+- **Model Layer**: Entity classes (Customer, Address, ContactPerson, etc.) with fields and getter/setter methods.
 
 ## 5. Database
-- Menggunakan H2 in-memory database.
-- Tabel: CUSTOMER, ADDRESS, CONTACT_PERSON.
-- Relasi foreign key sesuai model di atas.
+- Uses H2 in-memory database.
+- Tables: CUSTOMER, ADDRESS, CONTACT_PERSON.
+- Foreign key relationships according to the model above.
 
-## 6. Catatan Teknis
-- Pagination: SQL LIMIT & OFFSET.
-- Sorting: SQL ORDER BY sesuai kolom yang dipilih user.
-- Swing JTable: gunakan setAutoCreateRowSorter(true) untuk sorting kolom.
-- Validasi data di Service Layer.
+## 6. Technical Notes
+- Pagination: Use SQL LIMIT & OFFSET.
+- Sorting: Use SQL ORDER BY according to the column selected by the user.
+- Swing JTable: use setAutoCreateRowSorter(true) for column sorting.
+- Data validation in the Service Layer.
 
 ---
 
-**Dokumen ini menjadi acuan pengembangan aplikasi Simple CRM.**
+**This document is the main reference for developing the Simple CRM application.**
 
-**Dalam pembangunan aplikasi, pastikan untuk menyediakan unit test dan integration test antar layer.**
+**During development, ensure to provide unit tests and integration tests between layers.**

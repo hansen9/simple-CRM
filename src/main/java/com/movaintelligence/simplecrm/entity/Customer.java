@@ -1,13 +1,15 @@
-package com.movaintelligence.model;
+package com.movaintelligence.simplecrm.entity;
+
+import java.util.List;
 
 public class Customer {
     private Long id;
     private String nama;
-    private Tipe tipe;
+    private Type type;
     private Status status;
-    // Address dan ContactPerson akan direlasikan kemudian
+    private List<Address> addresses; // Added field for one-to-many relationship with Address
 
-    public enum Tipe {
+    public enum Type {
         PERORANGAN, PERUSAHAAN
     }
 
@@ -18,10 +20,10 @@ public class Customer {
     // Constructor, getter, setter
     public Customer() {}
 
-    public Customer(Long id, String nama, Tipe tipe, Status status) {
+    public Customer(Long id, String nama, Type tipe, Status status) {
         this.id = id;
         this.nama = nama;
-        this.tipe = tipe;
+        this.type = tipe;
         this.status = status;
     }
 
@@ -33,20 +35,20 @@ public class Customer {
         this.id = id;
     }
 
-    public String getNama() {
+    public String getName() {
         return nama;
     }
 
-    public void setNama(String nama) {
+    public void setName(String nama) {
         this.nama = nama;
     }
 
-    public Tipe getTipe() {
-        return tipe;
+    public Type getType() {
+        return type;
     }
 
-    public void setTipe(Tipe tipe) {
-        this.tipe = tipe;
+    public void setType(Type tipe) {
+        this.type = tipe;
     }
 
     public Status getStatus() {
@@ -56,5 +58,12 @@ public class Customer {
     public void setStatus(Status status) {
         this.status = status;
     }
-}
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+}
